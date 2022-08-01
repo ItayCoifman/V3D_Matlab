@@ -4,6 +4,10 @@ if strcmp(v3dData,'')
     v3dPath =[path file];
     v3dData = load(v3dPath);
 end
+if ~isstruct(v3dData)
+    v3dPath =v3dData;
+    v3dData = load(v3dPath);
+end
 FS = v3dData.FRAME_RATE{:};
 p = inputParser;
 addOptional(p,'timeVec',[]);

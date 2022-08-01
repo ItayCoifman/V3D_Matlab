@@ -8,7 +8,7 @@ if ~exist(outputDir,'dir')
 end
 path_GenericModel =[inputDir 'CAST.mdh'];
 path_staticTrial =[inputDir 'Static.c3d'];
-motions = [{[inputDir 'run_1.c3d']};{[inputDir 'run_2.c3d']}];
+motions = [{['run_1']};{['run_2']}];
 
 subjectMass = '50';
 subjectHeight ='1.7';
@@ -30,9 +30,8 @@ changeMetric(path_pipeLine,'addedMass_Foot',0)
 %add many motions as you like
 %motion - 1
 for i = 1:length(motions)
-    addMotion(path_pipeLine, 'path_motion',motions{i});
+    addMotion(path_pipeLine, 'path_motion',[inputDir motions{i} '.c3d']);
 end
-
 
 %% Modify_Force_Platform_Parameters
 fixForcePlateData(path_pipeLine,'recalc',false);
@@ -50,18 +49,15 @@ calculateJoint(path_pipeLine,'JOINT_MOMENT', 'hip',  'resultName', 'R_HIP_MOM');
 calculateJoint(path_pipeLine,'JOINT_POWER', 'hip',  'resultName', 'R_HIP_POW');
 calculateJoint(path_pipeLine,'JOINT_VELOCITY', 'hip',  'resultName', 'R_HIP_VEL');
 
-
-calculateJoint(path_pipeLine,'JOINT_ANGLE', 'knee',  'resultName', 'R_KNEE_MOM');
-calculateJoint(path_pipeLine,'JOINT_MOMENT', 'knee',  'resultName', 'R_KNEE_ANG');
+calculateJoint(path_pipeLine,'JOINT_ANGLE', 'knee',  'resultName', 'R_KNEE_ANG');
+calculateJoint(path_pipeLine,'JOINT_MOMENT', 'knee',  'resultName', 'R_KNEE_MOM');
 calculateJoint(path_pipeLine,'JOINT_POWER', 'knee',  'resultName', 'R_KNEE_POW');
 calculateJoint(path_pipeLine,'JOINT_VELOCITY', 'knee',  'resultName', 'R_KNEE_VEL');
-
 
 calculateJoint(path_pipeLine,'JOINT_ANGLE', 'ankle',  'resultName', 'R_ANK_ANG');
 calculateJoint(path_pipeLine,'JOINT_MOMENT', 'ankle',  'resultName', 'R_ANK_MOM');
 calculateJoint(path_pipeLine,'JOINT_POWER', 'ankle',  'resultName', 'R_ANK_POW');
 calculateJoint(path_pipeLine,'JOINT_VELOCITY', 'ankle',  'resultName', 'R_ANK_VEL');
-
 
 %% export calcutltions to matlabStruct
 exportMatFile(path_pipeLine);
@@ -83,10 +79,23 @@ end
 moveFiles(inputDir,outputDir,'mat','copy',false)
 %% Close V3D
 %[status1]=dos(['"C:\Windows\System32\taskkill.exe"' '/F /im ' 'Visual3D.exe']);
-
-
-
-
-
+%% read data 
+v3dData = load([outputDir motions{1} '.mat']);
+[ikTable idTable,powerTable,forceTable,forceTableProc] = getV3DTabels(v3dData);
+sInd = 400;
+%% plot Data
+figure
+subplot(2,2,1)
+plot(forceTable.ground_force_2__vz(sInd:sInd+170));
+title('GRF'); xlabel('Frame Number'); ylabel('Force [N]');
+subplot(2,2,2)
+plot(ikTable.knee_angle_r(sInd:sInd+170));
+title('Knee Angle'); xlabel('Frame Number'); ylabel('Angle [Deg]');
+subplot(2,2,3)
+plot(idTable.knee_angle_r_moment(sInd:sInd+170));
+title('Knee Moment'); xlabel('Frame Number'); ylabel('Moment [Nm]');
+subplot(2,2,4)
+plot(powerTable.knee_angle_r_power(sInd:sInd+170));
+title('Knee Power'); xlabel('Frame Number'); ylabel('Power [W]');
 
 
