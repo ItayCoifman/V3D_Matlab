@@ -1,5 +1,29 @@
 
-function exportMatFile(path_pipeLine)
+function exportMatFile(path_pipeLine,varargin)
+p = inputParser;
+addOptional(p,'SIGNAL_TYPES','');
+addOptional(p,'SIGNAL_FOLDER','');
+addOptional(p,'SIGNAL_NAMES', '');
+addOptional(p,'MATLAB_NAMES', '');
+parse(p,varargin{:});
+if strcmp(p.Results.SIGNAL_TYPES,'')
+    flag = 0; %defult
+else
+    SIGNAL_TYPES = p.Results.SIGNAL_TYPES;
+    SIGNAL_FOLDER = p.Results.SIGNAL_FOLDER;
+    SIGNAL_NAMES = p.Results.SIGNAL_NAMES;
+    MATLAB_NAMES = p.Results.MATLAB_NAMES;
+    if ~strcmp(SIGNAL_TYPES,'')&strcmp(SIGNAL_NAMES,'')&...
+            strcmp(SIGNAL_FOLDER,'')&strcmp(MATLAB_NAMES,'')
+        flag = 1;
+        %check that user inputed all info needed
+    else
+        disp('Not all neded values for non defult has been enterd')
+    end
+end
+
+
+
 fid = fopen(path_pipeLine,'a');
 if fid > 0
     fprintf(fid,'Set_Pipeline_Parameter_To_List_Of_Tagged_Files\r\n');
@@ -32,11 +56,23 @@ if fid > 0
     fprintf(fid,'\r\n');
     % maybe can be more effective
     fprintf(fid,'Export_Data_To_Matfile\r\n');
-    fprintf(fid,'/SIGNAL_TYPES=%s\r\n',['LINK_MODEL_BASED+LINK_MODEL_BASED+LINK_MODEL_BASED+LINK_MODEL_BASED+LINK_MODEL_BASED+LINK_MODEL_BASED+LINK_MODEL_BASED+LINK_MODEL_BASED+LINK_MODEL_BASED+LINK_MODEL_BASED+LINK_MODEL_BASED+LINK_MODEL_BASED+FORCE+FORCE+COFP+COFP']);
-    fprintf(fid,'/SIGNAL_FOLDER=%s\r\n',['ORIGINAL+ORIGINAL+ORIGINAL+ORIGINAL+ORIGINAL+ORIGINAL+ORIGINAL+ORIGINAL+ORIGINAL+ORIGINAL+ORIGINAL+ORIGINAL+ORIGINAL+ORIGINAL+ORIGINAL+ORIGINAL']);
-    fprintf(fid,'/SIGNAL_NAMES=%s\r\n',['R_ANK_POW+R_KNE_POW+R_HIP_POW+R_ANK_VEL+R_KNEE_VEL+R_HIP_VEL+R_ANK_MOM+R_KNEE_MOM+R_HIP_MOM+R_ANK_ANG+R_KNEE_ANG+R_HIP_ANG+FP2+FP1+FP1+FP2']);
+    fprintf(fid,'/SIGNAL_TYPES=%s\r\n',['LINK_MODEL_BASED+LINK_MODEL_BASED+LINK_MODEL_BASED+LINK_MODEL_BASED+LINK_MODEL_BASED+LINK_MODEL_BASED+LINK_MODEL_BASED+LINK_MODEL_BASED+LINK_MODEL_BASED+LINK_MODEL_BASED+LINK_MODEL_BASED+LINK_MODEL_BASED'...
+        '+FORCE+FORCE+COFP+COFP'...
+        '+KINETIC_KINEMATIC+KINETIC_KINEMATIC'...
+        '+TARGET']);
+    fprintf(fid,'/SIGNAL_FOLDER=%s\r\n',['ORIGINAL+ORIGINAL+ORIGINAL+ORIGINAL+ORIGINAL+ORIGINAL+ORIGINAL+ORIGINAL+ORIGINAL+ORIGINAL+ORIGINAL+ORIGINAL'...
+        '+ORIGINAL+ORIGINAL+ORIGINAL+ORIGINAL'...
+        '+RFT+RFT'...
+        '+PROCESSED']);
+    fprintf(fid,'/SIGNAL_NAMES=%s\r\n',['R_ANK_POW+R_KNEE_POW+R_HIP_POW+R_ANK_VEL+R_KNEE_VEL+R_HIP_VEL+R_ANK_MOM+R_KNEE_MOM+R_HIP_MOM+R_ANK_ANG+R_KNEE_ANG+R_HIP_ANG'...
+        '+FP2+FP1+FP1+FP2' ...
+        '+COP_1+FORCE_1'...
+        '+L_FAL']);
     fprintf(fid,'/FILE_NAME=%s\r\n','::NEW_INDEX');
-    fprintf(fid,'/MATLAB_NAMES=%s\r\n','RA_POW+RK_POW+RH_POW+RA_VEL+RK_VEL+RH_VEL+RA_MOM+RK_MOM+RH_MOM+RA_ANG+RK_ANG+RH_ANG+R_FP+L_FP+L_COP+R_COP');
+    fprintf(fid,'/MATLAB_NAMES=%s\r\n',['RA_POW+RK_POW+RH_POW+RA_VEL+RK_VEL+RH_VEL+RA_MOM+RK_MOM+RH_MOM+RA_ANG+RK_ANG+RH_ANG'...
+        '+R_FP+L_FP+L_COP+R_COP'...
+        '+R_COP_PROC+R_FP_PROC'...
+        '+L_FAL']);
     fprintf(fid,'/PARAMETER_NAMES=%s\r\n','::INDEX');
     fprintf(fid,'/PARAMETER_GROUPS=%s\r\n','FILE');
     fprintf(fid,'/OUTPUT_PARAMETER_NAMES=%s\r\n','FILENAME');

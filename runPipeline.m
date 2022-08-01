@@ -12,5 +12,7 @@ path_V3D = p.Results.path_V3D;
 [filepath,name,ext] = fileparts(path_pipeLine);
 copyfile(path_pipeLine,[cd '\' name,ext]);
 [status,result] = dos(['"' path_V3D '" /s ' [name,ext] '&']);
-% add delete file when the run is over
+% add delete file when the run is over.
+pause(10)
+delete([cd '\' name,ext]);
 end

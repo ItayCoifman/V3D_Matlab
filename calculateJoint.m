@@ -34,24 +34,7 @@ end
         RESOLUTION_COORDINATE_SYSTEM = REFERENCE_SEGMENT;
         REFERENCE_SEGMENT = '';
     end
-    %{
-else
-    switch jointName
-        case 'hip'
-            segment = 'RTH';
-            REFERENCE_SEGMENT = 'RPV';
-            %RESOLUTION_COORDINATE_SYSTEM = ;
-        case 'knee'
-            segment = 'RSK';
-            REFERENCE_SEGMENT = 'RSK';
-            %RESOLUTION_COORDINATE_SYSTEM = ;
-        case 'ankle'
-            segment = 'RFT';
-            REFERENCE_SEGMENT = 'RTH';
-            %RESOLUTION_COORDINATE_SYSTEM = ;
-    end
-    %}
-%end
+
 if strcmp(p.Results.direction,'L')
     segment(1)='L';
     REFERENCE_SEGMENT(1)='L';
