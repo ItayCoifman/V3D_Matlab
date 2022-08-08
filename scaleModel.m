@@ -6,7 +6,6 @@ function scaleModel(path_pipeLine,varargin)
 %path_staticTrial
 %subjectMass
 %subjectHeight
-
 p = inputParser;
 addOptional(p,'path_GenericModel','');
 addOptional(p,'path_staticTrial','');
@@ -40,14 +39,7 @@ if fid > 0
     fprintf(fid,';\r\n');
     fprintf(fid,'\r\n');
 
-    % Apply a model template (Model|Apply Model Template).
-    fprintf(fid,'Apply_Model_Template\r\n');
-    fprintf(fid,'/MODEL_TEMPLATE=%s\r\n',[path_GenericModel]);
-    fprintf(fid,'/CALIBRATION_FILE=%s\r\n',[path_staticTrial]);
-    fprintf(fid,';\r\n');
-    fprintf(fid,'\r\n');
-
-    % add weight
+        % add weight
     fprintf(fid,'Set_Subject_Weight\r\n');
     fprintf(fid,'! /CALIBRATION_FILE=%s\r\n',[path_staticTrial]);
     fprintf(fid,'/WEIGHT=%s\r\n',[subjectMass]);
@@ -60,6 +52,15 @@ if fid > 0
     fprintf(fid,'/HEIGHT=%s\r\n',[subjectHeight]);
     fprintf(fid,';\r\n');
     fprintf(fid,'\r\n');
+
+    % Apply a model template (Model|Apply Model Template).
+    fprintf(fid,'Apply_Model_Template\r\n');
+    fprintf(fid,'/MODEL_TEMPLATE=%s\r\n',[path_GenericModel]);
+    fprintf(fid,'/CALIBRATION_FILE=%s\r\n',[path_staticTrial]);
+    fprintf(fid,';\r\n');
+    fprintf(fid,'\r\n');
+
+
 
     % Build model
     fprintf(fid,'Build_Model\r\n');

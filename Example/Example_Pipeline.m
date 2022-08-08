@@ -8,6 +8,8 @@ if ~exist(outputDir,'dir')
 end
 path_GenericModel =[inputDir 'CAST.mdh'];
 path_staticTrial =[inputDir 'Static.c3d'];
+path_staticTrial_2 =[inputDir 'Static_1.c3d'];
+
 motions = [{['run_1']};{['run_2']}];
 
 subjectMass = '50';
@@ -22,16 +24,24 @@ status = createPipeLine(path_pipeLine);
 scaleModel(path_pipeLine,'path_GenericModel',path_GenericModel,...
     'path_staticTrial',path_staticTrial,'subjectMass',subjectMass,...
     'subjectHeight',subjectHeight);
+
+scaleModel(path_pipeLine,'path_GenericModel',path_GenericModel,...
+    'path_staticTrial',path_staticTrial_2,'subjectMass',subjectMass,...
+    'subjectHeight',subjectHeight);
 %% change Weight metric
-changeMetric(path_pipeLine,'addedMass_Thigh',0)
-changeMetric(path_pipeLine,'addedMass_Shank',0)
+changeMetric(path_pipeLine,'addedMass_Thigh',10,'modelName',path_staticTrial)
+changeMetric(path_pipeLine,'addedMass_Shank',5,'modelName',path_staticTrial_2)
 changeMetric(path_pipeLine,'addedMass_Foot',0)
 %% load trial
 %add many motions as you like
 %motion - 1
+%{
 for i = 1:length(motions)
     addMotion(path_pipeLine, 'path_motion',[inputDir motions{i} '.c3d']);
 end
+%}
+addMotion(path_pipeLine, 'path_motion',[inputDir motions{1} '.c3d'],'modelName',path_staticTrial);
+addMotion(path_pipeLine, 'path_motion',[inputDir motions{2} '.c3d'],'modelName',path_staticTrial_2);
 
 %% Modify_Force_Platform_Parameters
 fixForcePlateData(path_pipeLine,'recalc',false);

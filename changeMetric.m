@@ -8,6 +8,7 @@ function changeMetric(path_pipeLine,METRIC_NAME,METRIC_VALUE,varargin)
 %recalc
 p = inputParser;
 addOptional(p,'recalc',true);
+addOptional(p,'modelName','');
 parse(p,varargin{:});
 %path_GenericModel =p.Results.path_GenericModel;
 if isnumeric(METRIC_VALUE)
@@ -17,7 +18,7 @@ fid = fopen(path_pipeLine,'a');
 if fid > 0
     % Create a hybrid model (Model|Create|Hybrid Model from C3DFile).
     fprintf(fid,'Set_Model_Metric\r\n');
-    fprintf(fid,'! /CALIBRATION_FILE=%s\r\n',['']);
+    fprintf(fid,'/CALIBRATION_FILE=%s\r\n',[p.Results.modelName]);
     % here is optional to set range in the static file at the future
     fprintf(fid,['/METRIC_NAME=' [METRIC_NAME] '\r\n']);
     fprintf(fid,['/METRIC_VALUE=' [METRIC_VALUE] '\r\n']);
