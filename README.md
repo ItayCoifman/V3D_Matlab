@@ -111,7 +111,7 @@ C- motion - Visual-3D, licensed need to be instaled for launcing pipelines.
    ```sh
    git clone https://github.com/ItayCoifman/V3D_Matlab.git
    ```
-2. set Path via matlab to the cloned project
+2. set Path via matlab to the cloned project (with subfolders)
 
 3. change path_V3D at the exmaple file to the relevant directory.
 
