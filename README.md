@@ -78,8 +78,8 @@
 
 <!--[![Product Name Screen Shot][product-screenshot]](https://example.com)-->
 Creating a V3D pipeline is a hard mission and requires a lot of technical and scientific knowledge. Manipulating an existing pipeline is not always easy and manipulating it dynamically and automatically via code is an even more complicated task. 
- As an addition to this paper, we introduce the MATLAB V3D wrapper package. This code package is aimed to create, and launch V3D pipelines using intuitive MATLAB commands, while offering the user dynamic change at each pipeline easily.
-In this paper, this dynamic change was used to iterate through all subjects and all trials, change each trial model to fit the desired weight attached (changeMetric), and automate the whole process so the hole experiment can be processed through V3D to MATLAB tables using a single MATLAB script.
+We introduce the MATLAB V3D wrapper package. This code package is aimed to create, and launch V3D pipelines using intuitive MATLAB commands, while offering the user dynamic change at each pipeline easily.
+This dynamic change can be used to iterate through subjects, and trials, change each trial model to fit small adjustments(changeMetric), and automate the whole process so an experiment can be processed through V3D to MATLAB tables using a single MATLAB script.
 
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
