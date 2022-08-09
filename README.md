@@ -23,7 +23,7 @@
 <br />
 <div align="center">
   <a href="https://github.com/ItayCoifman/V3D_Matlab">
-    <img src="logo.png" alt="Logo" width="300" height="150">
+    <img src="figures/logo.png" alt="Logo" width="300" height="150">
   </a>
 
 <h3 align="center">V3D pipeline MATLAB wrappers pack</h3>
