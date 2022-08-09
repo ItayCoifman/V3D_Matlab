@@ -125,8 +125,9 @@ C- motion - Visual-3D, licensed need to be instaled for launcing pipelines.
 ## Usage
 <p align="left">
 Optional – added features that can be added to the pipeline through the MATLAB command, for example, scaleModel(path_pipeLine, ‘path_staticTrial’,…), if the optional fields are not used, the pipeline will use the V3D default (typically it will pop up a window to choose the relevant file via the V3D GUI. 
-Model is declared by the path to the static trial, i.e., ‘path_staticTrial’ = ‘modelName’
 </p>
+<p align="left">Model is declared by the path to the static trial, i.e., ‘path_staticTrial’ = ‘modelName’</p>
+
 
 <h3> Wrapper package function</h3>
 <p align="left">
